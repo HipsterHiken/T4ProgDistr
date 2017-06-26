@@ -1,7 +1,9 @@
 package StockMarket;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class StockServerImpl extends StockServerPOA{
 
@@ -27,6 +29,21 @@ public class StockServerImpl extends StockServerPOA{
 
 	public synchronized String[] getStockSymbols() {
 		return myStock.keySet().toArray(new String[0]);
+	}
+
+	public StockInfo[] getStockInfo() {
+		StockInfo[] stockInfos = new StockInfo[myStock.size()];
+		
+		Set<String> keys = myStock.keySet();
+		
+		Iterator<String> it = keys.iterator();
+		
+		for(int i = 0; i < myStock.size(); i++){
+			String key = it.next();
+			stockInfos[i] = new StockInfoImpl(key, myStock.get(key));
+		}
+		
+		return stockInfos;
 	}
 
 }

@@ -15,6 +15,15 @@ module StockMarket {
 	
 	// Um StockSymbolList é uma sequência de StockSymbols.
 	typedef sequence<StockSymbol> StockSymbolList;
+
+	valuetype StockInfo {
+		public StockSymbol name;
+		public float value;
+
+		string toString();
+	};
+
+	typedef sequence<StockInfo> StockInfoList;
 	
 	// A interface StockServer é a interface que fornece
 	// as informações sobre as ações do mercado.
@@ -31,5 +40,7 @@ module StockMarket {
 		// StockSymbols conhecidos pelo servidor do mercado de
 		// ações.
 		StockSymbolList getStockSymbols();
+
+		StockInfoList getStockInfo();
 	};
 };

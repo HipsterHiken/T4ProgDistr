@@ -20,6 +20,12 @@ public class StockMarketClient {
 				String ior = reader.readLine();
 				org.omg.CORBA.Object obj = orb.string_to_object(ior);
 				StockServer server = StockServerHelper.narrow(obj);
+				
+				StockInfo[] stockInfos = server.getStockInfo();
+				
+				for(int i = 0; i < stockInfos.length; i++){
+					System.out.println(stockInfos[i]._toString());
+				}
 			} catch (FileNotFoundException e) {
 				System.out.println("unexpected error");
 			} catch (IOException e) {
