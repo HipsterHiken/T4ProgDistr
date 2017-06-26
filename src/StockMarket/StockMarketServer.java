@@ -1,5 +1,9 @@
 package StockMarket;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 import org.jacorb.poa.POA;
@@ -27,6 +31,25 @@ public class StockMarketServer {
 				poa.the_POAManager().activate();
 				try {
 					org.omg.CORBA.Object o = poa.servant_to_reference(stockServer);
+					String ior = orb.object_to_string(o);
+					
+					File log = new File("IOR.txt");
+					
+					FileWriter fileWriter;
+					try {
+						fileWriter = new FileWriter(log, true);
+						BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+						try {
+							bufferedWriter.write(ior);
+						} catch (IOException e) {
+							System.out.println("unexpected error");
+							System.exit(1);
+						}
+					} catch (IOException e1) {
+						System.out.println("unexpected error");
+						System.exit(1);
+					}
+					
 					orb.run();
 				} catch (ServantNotActive | WrongPolicy e) {
 					System.out.println("unexpected error");
